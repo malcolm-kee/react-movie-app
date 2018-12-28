@@ -1,3 +1,4 @@
+import React from 'react';
 import Movie from './movie';
 
 class App extends React.Component {

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Movie = props =>
   React.createElement('div', {}, [
     React.createElement('h1', {}, props.name),
