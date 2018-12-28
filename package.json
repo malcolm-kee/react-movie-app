@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --mode=\"development\"",
     "format": "prettier --write script.js",
     "lint": "eslint **/*.{js,jsx} --quiet"
   },
@@ -12,6 +13,8 @@
   "devDependencies": {
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
   }
 }
