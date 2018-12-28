@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write script.js"
+    "format": "prettier --write script.js",
+    "lint": "eslint **/*.{js,jsx} --quiet"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-prettier": "^3.3.0",
     "prettier": "^1.15.3"
   }
 }
