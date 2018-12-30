@@ -1,13 +1,19 @@
 import React from 'react';
 import Movie from './movie';
+import { loadMovies } from './api';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMovies: false
+      showMovies: false,
+      movies: []
     };
     this.toggleMovies = this.toggleMovies.bind(this);
+  }
+
+  componentDidMount() {
+    loadMovies().then(movies => this.setState({ movies }));
   }
 
   toggleMovies() {
@@ -23,16 +29,14 @@ class App extends React.Component {
         <button onClick={this.toggleMovies}>
           {this.state.showMovies ? 'Hide' : 'Show'} Movies
         </button>
-        {this.state.showMovies && (
-          <>
-            <Movie name="Aquaman" releaseDate="2018-12-07" />
-            <Movie name="Bumblebee" releaseDate="2018-12-15" />
+        {this.state.showMovies &&
+          this.state.movies.map(movie => (
             <Movie
-              name="Fantastic Beasts: The Crimes of Grindelwald"
-              releaseDate="2018-11-14"
+              name={movie.name}
+              releaseDate={movie.releaseDate}
+              key={movie.id}
             />
-          </>
-        )}
+          ))}
       </div>
     );
   }
