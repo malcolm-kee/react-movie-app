@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Movie = props =>
-  React.createElement('div', {}, [
-    React.createElement('h1', {}, props.name),
-    React.createElement('h2', {}, props.releaseDate)
-  ]);
+const Movie = props => (
+  <div>
+    <h1>{props.name}</h1>
+    <h2>{props.releaseDate}</h2>
+  </div>
+);
 
 export default Movie;

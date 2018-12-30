@@ -1,6 +1,14 @@
 {
-  "extends": ["eslint:recommended", "prettier", "prettier/react"],
-  "plugins": [],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": ["react"],
+  "rules": {
+    "react/prop-types": 0
+  },
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -12,5 +20,10 @@
     "es6": true,
     "browser": true,
     "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "16.7"
+    }
   }
 }
