@@ -2,7 +2,7 @@ import React from 'react';
 
 export const BusyContainer = ({ isLoading, children }) => (
   <div>
-    {isLoading && <span>loading...</span>}
+    {isLoading && <span data-testid="loading-indicator">loading...</span>}
     {children}
   </div>
 );
