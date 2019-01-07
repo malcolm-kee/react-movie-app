@@ -1,7 +1,11 @@
 import React from 'react';
-import { loadMovies } from './api';
 import { BusyContainer } from './busy-container';
 import Movie from './movie';
+
+const loadCodeAndMoviesData = () =>
+  import(/* webpackChunkName: "api" */ './api').then(({ loadMovies }) =>
+    loadMovies()
+  );
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +19,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    loadMovies().then(movies => this.setState({ movies, isLoading: false }));
+    loadCodeAndMoviesData().then(movies =>
+      this.setState({ movies, isLoading: false })
+    );
   }
 
   toggleMovies() {
