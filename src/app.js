@@ -1,38 +1,57 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
+import { debounce } from './lib';
 import './style.css';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
 );
 
-const loadCodeAndMoviesData = () =>
+const loadCodeAndMoviesData = searchKey =>
   import(/* webpackChunkName: "api" */ './api').then(({ loadMovies }) =>
-    loadMovies()
+    loadMovies(searchKey)
   );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMovies: false,
-      isLoading: true,
-      movies: []
-    };
-    this.toggleMovies = this.toggleMovies.bind(this);
-  }
+  state = {
+    showMovies: false,
+    isLoading: true,
+    movies: [],
+    searchTerm: ''
+  };
 
   componentDidMount() {
-    loadCodeAndMoviesData().then(movies =>
-      this.setState({ movies, isLoading: false })
-    );
+    this.updateMovieList();
   }
 
-  toggleMovies() {
+  handleSearchTermChange = ev => {
+    this.setState(
+      {
+        searchTerm: ev.target.value
+      },
+      () => {
+        this.setState({ isLoading: true });
+        this.debouncedUpdateMovieList(this.state.searchTerm);
+      }
+    );
+  };
+
+  updateMovieList = searchKey => {
+    loadCodeAndMoviesData(searchKey).then(movies =>
+      this.setState({
+        movies,
+        isLoading: false
+      })
+    );
+  };
+
+  debouncedUpdateMovieList = debounce(this.updateMovieList, 200);
+
+  toggleMovies = () => {
     this.setState(prevState => ({
       showMovies: !prevState.showMovies
     }));
-  }
+  };
 
   render() {
     return (
@@ -40,24 +59,34 @@ class App extends React.Component {
         <div className="title-bar">
           <h1>React Movie App</h1>
         </div>
-        <div className="button-container">
-          <button className="button" onClick={this.toggleMovies}>
-            {this.state.showMovies ? 'Hide' : 'Show'} Movies
-          </button>
-        </div>
-        {this.state.showMovies && (
-          <React.Suspense fallback={<span>Loading Component...</span>}>
-            <BusyContainer isLoading={this.state.isLoading}>
-              {this.state.movies.map(movie => (
-                <Movie
-                  name={movie.name}
-                  releaseDate={movie.releaseDate}
-                  key={movie.id}
+        <div className="container">
+          <div className="button-container">
+            <button className="button" onClick={this.toggleMovies}>
+              {this.state.showMovies ? 'Hide' : 'Show'} Movies
+            </button>
+          </div>
+          {this.state.showMovies && (
+            <React.Suspense fallback={<span>Loading Component...</span>}>
+              <div className="field">
+                <input
+                  value={this.state.searchTerm}
+                  onChange={this.handleSearchTermChange}
+                  className="input"
+                  placeholder="Search for movie..."
                 />
-              ))}
-            </BusyContainer>
-          </React.Suspense>
-        )}
+              </div>
+              <BusyContainer isLoading={this.state.isLoading}>
+                {this.state.movies.map(movie => (
+                  <Movie
+                    name={movie.name}
+                    releaseDate={movie.releaseDate}
+                    key={movie.id}
+                  />
+                ))}
+              </BusyContainer>
+            </React.Suspense>
+          )}
+        </div>
       </div>
     );
   }
