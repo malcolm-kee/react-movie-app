@@ -12,15 +12,11 @@ const loadCodeAndMoviesData = () =>
   );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMovies: false,
-      isLoading: true,
-      movies: []
-    };
-    this.toggleMovies = this.toggleMovies.bind(this);
-  }
+  state = {
+    showMovies: false,
+    isLoading: true,
+    movies: []
+  };
 
   componentDidMount() {
     loadCodeAndMoviesData().then(movies =>
@@ -28,11 +24,10 @@ class App extends React.Component {
     );
   }
 
-  toggleMovies() {
+  toggleMovies = () =>
     this.setState(prevState => ({
       showMovies: !prevState.showMovies
     }));
-  }
 
   render() {
     return (
