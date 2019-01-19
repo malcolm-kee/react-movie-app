@@ -1,3 +1,7 @@
+// eslint-disable-next-line no-unused-vars
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   module: {
     rules: [
@@ -7,5 +11,13 @@ module.exports = {
         use: ['babel-loader']
       }
     ]
-  }
+  },
+  devServer: {
+    port: 9200
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    })
+  ]
 };
