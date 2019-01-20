@@ -2,19 +2,14 @@ import React from 'react';
 import Movie from './movie';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMovies: false
-    };
-    this.showMovies = this.showMovies.bind(this);
-  }
+  state = {
+    showMovies: false
+  };
 
-  showMovies() {
+  showMovies = () =>
     this.setState({
       showMovies: true
     });
-  }
 
   render() {
     return (
