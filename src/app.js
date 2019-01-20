@@ -1,10 +1,18 @@
 import React from 'react';
+import { loadMovies } from './api';
+import { BusyContainer } from './busy-container';
 import Movie from './movie';
 
 class App extends React.Component {
   state = {
-    showMovies: false
+    showMovies: false,
+    movies: [],
+    isLoading: true
   };
+
+  componentDidMount() {
+    loadMovies().then(movies => this.setState({ movies, isLoading: false }));
+  }
 
   toggleMovies = () =>
     this.setState(prevState => ({
@@ -23,14 +31,15 @@ class App extends React.Component {
           </button>
         </div>
         {this.state.showMovies && (
-          <>
-            <Movie name="Aquaman" releaseDate="2018-12-07" />
-            <Movie name="Bumblebee" releaseDate="2018-12-15" />
-            <Movie
-              name="Fantastic Beasts: The Crimes of Grindelwald"
-              releaseDate="2018-11-14"
-            />
-          </>
+          <BusyContainer isLoading={this.state.isLoading}>
+            {this.state.movies.map(movie => (
+              <Movie
+                name={movie.name}
+                releaseDate={movie.releaseDate}
+                key={movie.id}
+              />
+            ))}
+          </BusyContainer>
         )}
       </div>
     );
