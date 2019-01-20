@@ -5,7 +5,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>React Movie App</h1>
+        <div className="title-bar">
+          <h1>React Movie App</h1>
+        </div>
         <Movie name="Aquaman" releaseDate="2018-12-07" />
         <Movie name="Bumblebee" releaseDate="2018-12-15" />
         <Movie
