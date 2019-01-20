@@ -14,10 +14,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>React Movie App</h1>
-        <button onClick={this.toggleMovies}>
-          {this.state.showMovies ? 'Hide' : 'Show'} Movies
-        </button>
+        <div className="title-bar">
+          <h1>React Movie App</h1>
+        </div>
+        <div className="button-container">
+          <button onClick={this.toggleMovies} className="button">
+            {this.state.showMovies ? 'Hide' : 'Show'} Movies
+          </button>
+        </div>
         {this.state.showMovies && (
           <>
             <Movie name="Aquaman" releaseDate="2018-12-07" />
