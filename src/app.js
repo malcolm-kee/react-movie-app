@@ -6,16 +6,18 @@ class App extends React.Component {
     showMovies: false
   };
 
-  showMovies = () =>
-    this.setState({
-      showMovies: true
-    });
+  toggleMovies = () =>
+    this.setState(prevState => ({
+      showMovies: !prevState.showMovies
+    }));
 
   render() {
     return (
       <div>
         <h1>React Movie App</h1>
-        <button onClick={this.showMovies}>Show Movies</button>
+        <button onClick={this.toggleMovies}>
+          {this.state.showMovies ? 'Hide' : 'Show'} Movies
+        </button>
         {this.state.showMovies && (
           <>
             <Movie name="Aquaman" releaseDate="2018-12-07" />
