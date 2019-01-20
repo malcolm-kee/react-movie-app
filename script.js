@@ -1,5 +1,5 @@
 const Movie = props =>
-  React.createElement('div', {}, [
+  React.createElement('div', { className: 'movie-container' }, [
     React.createElement('h1', {}, props.name),
     React.createElement('h2', {}, props.releaseDate),
   ]);
@@ -7,7 +7,9 @@ const Movie = props =>
 class App extends React.Component {
     render() {
       return React.createElement('div', {}, [
-        React.createElement('h1', {}, 'React Movie App'),
+        React.createElement('div', {className: 'title-bar'}, [
+          React.createElement('h1', {}, 'React Movie App')
+        ]),
         React.createElement(Movie, {
           name: 'Aquaman',
           releaseDate: '2018-12-07'
