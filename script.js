@@ -7,9 +7,9 @@ const Movie = props =>
 class App extends React.Component {
     render() {
       return React.createElement('div', {}, [
-        React.createElement('div', {className: 'title-bar'}, [
+        React.createElement('div', {className: 'title-bar'}, 
           React.createElement('h1', {}, 'React Movie App')
-        ]),
+        ),
         React.createElement(Movie, {
           name: 'Aquaman',
           releaseDate: '2018-12-07'
