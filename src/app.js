@@ -1,12 +1,11 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
-import './style.css';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
 );
 
-const loadCodeAndMoviesData = () =>
+const loadCodeAndMovies = () =>
   import(/* webpackChunkName: "api" */ './api').then(({ loadMovies }) =>
     loadMovies()
   );
@@ -19,7 +18,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    loadCodeAndMoviesData().then(movies =>
+    loadCodeAndMovies().then(movies =>
       this.setState({ movies, isLoading: false })
     );
   }
