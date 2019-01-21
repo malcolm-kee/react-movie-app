@@ -1,13 +1,12 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
 import { debounce } from './lib';
-import './style.css';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
 );
 
-const loadCodeAndMoviesData = searchKey =>
+const loadCodeAndMovies = searchKey =>
   import(/* webpackChunkName: "api" */ './api').then(({ loadMovies }) =>
     loadMovies(searchKey)
   );
@@ -37,7 +36,7 @@ class App extends React.Component {
   };
 
   updateMovieList = searchKey => {
-    loadCodeAndMoviesData(searchKey).then(movies =>
+    loadCodeAndMovies(searchKey).then(movies =>
       this.setState({
         movies,
         isLoading: false
