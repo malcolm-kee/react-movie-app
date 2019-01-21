@@ -52,6 +52,8 @@ describe('<App />', () => {
 
     fireEvent.click(getByText('Show Movies'));
 
+    await wait(); // wait for Movie component to be lazy loaded
+
     expect(getAllByTestId('movie').length).toBe(mockMovieData.length);
   });
 });
