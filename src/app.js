@@ -1,6 +1,5 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
-import { debounce } from './lib';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
@@ -30,7 +29,7 @@ class App extends React.Component {
       },
       () => {
         this.setState({ isLoading: true });
-        this.debouncedUpdateMovieList(this.state.searchTerm);
+        this.updateMovieList(this.state.searchTerm);
       }
     );
   };
@@ -43,8 +42,6 @@ class App extends React.Component {
       })
     );
   };
-
-  debouncedUpdateMovieList = debounce(this.updateMovieList, 200);
 
   toggleMovies = () => {
     this.setState(prevState => ({
