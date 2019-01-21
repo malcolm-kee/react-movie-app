@@ -1,9 +1,14 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
-import Movie from './movie';
+
+const Movie = React.lazy(() =>
+  import(/* webpackChunkName: "Movie" */ './movie')
+);
 
 const loadCodeAndMovies = () =>
-  import('./api').then(({ loadMovies }) => loadMovies());
+  import(/* webpackChunkName: "api" */ './api').then(({ loadMovies }) =>
+    loadMovies()
+  );
 
 class App extends React.Component {
   state = {
@@ -35,15 +40,17 @@ class App extends React.Component {
           </button>
         </div>
         {this.state.showMovies && (
-          <BusyContainer isLoading={this.state.isLoading}>
-            {this.state.movies.map(movie => (
-              <Movie
-                name={movie.name}
-                releaseDate={movie.releaseDate}
-                key={movie.id}
-              />
-            ))}
-          </BusyContainer>
+          <React.Suspense fallback={<span>Loading Component...</span>}>
+            <BusyContainer isLoading={this.state.isLoading}>
+              {this.state.movies.map(movie => (
+                <Movie
+                  name={movie.name}
+                  releaseDate={movie.releaseDate}
+                  key={movie.id}
+                />
+              ))}
+            </BusyContainer>
+          </React.Suspense>
         )}
       </div>
     );
