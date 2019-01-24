@@ -1,6 +1,7 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
 import { debounce } from './lib';
+import { MovieForm } from './movie-form';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
@@ -14,6 +15,7 @@ const loadCodeAndMovies = searchKey =>
 class App extends React.Component {
   state = {
     showMovies: false,
+    showForm: false,
     isLoading: true,
     movies: [],
     searchTerm: ''
@@ -52,6 +54,19 @@ class App extends React.Component {
     }));
   };
 
+  toggleForm = () => {
+    this.setState(prevState => ({
+      showForm: !prevState.showForm
+    }));
+  };
+
+  handleFormCreated = () => {
+    this.setState({
+      showForm: false
+    });
+    this.updateMovieList();
+  };
+
   render() {
     return (
       <div>
@@ -59,6 +74,18 @@ class App extends React.Component {
           <h1>React Movie App</h1>
         </div>
         <div className="container">
+          {this.state.showForm ? (
+            <MovieForm
+              onCreated={this.handleFormCreated}
+              onCancel={this.toggleForm}
+            />
+          ) : (
+            <div className="button-container">
+              <button className="button" onClick={this.toggleForm}>
+                Show Form
+              </button>
+            </div>
+          )}
           <div className="button-container">
             <button className="button" onClick={this.toggleMovies}>
               {this.state.showMovies ? 'Hide' : 'Show'} Movies
