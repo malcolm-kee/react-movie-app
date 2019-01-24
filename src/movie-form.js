@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMovie } from './api';
 
-export class MovieForm extends React.Component {
+class MovieForm extends React.Component {
   state = {
     name: '',
     releaseDate: ''
@@ -68,3 +68,5 @@ export class MovieForm extends React.Component {
     );
   }
 }
+
+export default MovieForm;

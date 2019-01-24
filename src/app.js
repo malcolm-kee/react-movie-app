@@ -1,10 +1,13 @@
 import React from 'react';
 import { BusyContainer } from './busy-container';
 import { debounce } from './lib';
-import { MovieForm } from './movie-form';
 
 const Movie = React.lazy(() =>
   import(/* webpackChunkName: "Movie" */ './movie')
+);
+
+const MovieForm = React.lazy(() =>
+  import(/* webpackChunkName: "MovieForm" */ './movie-form')
 );
 
 const loadCodeAndMovies = searchKey =>
@@ -75,14 +78,16 @@ class App extends React.Component {
         </div>
         <div className="container">
           {this.state.showForm ? (
-            <MovieForm
-              onCreated={this.handleFormCreated}
-              onCancel={this.toggleForm}
-            />
+            <React.Suspense fallback={<span>Loading Form...</span>}>
+              <MovieForm
+                onCreated={this.handleFormCreated}
+                onCancel={this.toggleForm}
+              />
+            </React.Suspense>
           ) : (
             <div className="button-container">
               <button className="button" onClick={this.toggleForm}>
-                Show Form
+                Create Movie
               </button>
             </div>
           )}
